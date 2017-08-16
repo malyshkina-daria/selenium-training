@@ -11,7 +11,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 import static ru.stqa.training.selenium.Utils.getRandomString;
 import static ru.stqa.training.selenium.Utils.getRandomValue;
 
-public class StorePage extends OpenStorePageTest {
+public class StorePageTest extends OpenStorePageTest {
 
     @Test
     public void exercise8Test() {
@@ -43,7 +43,8 @@ public class StorePage extends OpenStorePageTest {
     }
 
     private boolean checkStyleForRegularPrice(Product product) {
-        return product.getRegularPrice().getCssValue("text-decoration").contains("line-through");
+//        return product.getRegularPrice().getCssValue("text-decoration").contains("line-through");
+        return product.getRegularPrice().getTagName().equals("s");
     }
 
     private boolean checkSizeForRegularPriceOnGeneralPage(Product product) {
@@ -65,7 +66,8 @@ public class StorePage extends OpenStorePageTest {
     }
 
     private boolean checkStyleForCampaignPrice(Product product) {
-        return product.getCampaignPrice().getCssValue("font-weight").contains("bold") &&
+//        return product.getCampaignPrice().getCssValue("font-weight").contains("bold") &&
+        return product.getCampaignPrice().getTagName().equals("strong") &&
                 product.getCampaignPrice().getCssValue("color").contains("rgb") &&
                 product.getCampaignPrice().getCssValue("color").contains("204, 0, 0");
     }

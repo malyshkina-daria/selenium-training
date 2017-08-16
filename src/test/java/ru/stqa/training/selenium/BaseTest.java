@@ -15,6 +15,7 @@ public class BaseTest {
     @BeforeClass
     public static void start() {
         driver = new ChromeDriver();
+//        driver = new FirefoxDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 100);
     }
