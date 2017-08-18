@@ -1,8 +1,8 @@
-package ru.stqa.training.selenium;
+package objects;
 
 import org.openqa.selenium.WebElement;
 
-class Product {
+public class Product {
 
     private String productName;
     private WebElement regularPrice;
@@ -10,43 +10,43 @@ class Product {
     private String regularPriceValue;
     private String campaignPriceValue;
 
-    String getProductName() {
+    public String getProductName() {
         return productName;
     }
 
-    void setProductName(String productName) {
+    public void setProductName(String productName) {
         this.productName = productName;
     }
 
-    WebElement getRegularPrice() {
+    public WebElement getRegularPrice() {
         return regularPrice;
     }
 
-    void setRegularPrice(WebElement regularPrice) {
+    public void setRegularPrice(WebElement regularPrice) {
         this.regularPrice = regularPrice;
     }
 
-    WebElement getCampaignPrice() {
+    public WebElement getCampaignPrice() {
         return campaignPrice;
     }
 
-    void setCampaignPrice(WebElement campaignPrice) {
+    public void setCampaignPrice(WebElement campaignPrice) {
         this.campaignPrice = campaignPrice;
     }
 
-    String getRegularPriceValue() {
+    public String getRegularPriceValue() {
         return regularPriceValue;
     }
 
-    void setRegularPriceValue(String regularPriceValue) {
+    public void setRegularPriceValue(String regularPriceValue) {
         this.regularPriceValue = regularPriceValue;
     }
 
-    String getCampaignPriceValue() {
+    public String getCampaignPriceValue() {
         return campaignPriceValue;
     }
 
-    void setCampaignPriceValue(String campaignPriceValue) {
+    public void setCampaignPriceValue(String campaignPriceValue) {
         this.campaignPriceValue = campaignPriceValue;
     }
 

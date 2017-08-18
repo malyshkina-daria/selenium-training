@@ -1,5 +1,7 @@
 package ru.stqa.training.selenium;
 
+import objects.Product;
+import objects.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -8,8 +10,8 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
-import static ru.stqa.training.selenium.Utils.getRandomString;
-import static ru.stqa.training.selenium.Utils.getRandomValue;
+import static utils.Utils.getRandomString;
+import static utils.Utils.getRandomValue;
 
 public class StorePageTest extends OpenStorePageTest {
 

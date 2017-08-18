@@ -1,22 +1,22 @@
-package ru.stqa.training.selenium;
+package objects;
 
-class User {
+public class User {
     private String email;
     private String password;
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

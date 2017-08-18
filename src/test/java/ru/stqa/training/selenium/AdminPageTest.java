@@ -1,15 +1,23 @@
 package ru.stqa.training.selenium;
 
+import objects.Product;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import utils.FileUpload;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AdminPage extends LoginAdminPageTest {
+import static utils.Utils.getRandomString;
+import static utils.Utils.getRandomValue;
+
+public class AdminPageTest extends LoginAdminPageTest {
 
     @Test
     public void exercise7Test() {
@@ -80,4 +88,67 @@ public class AdminPage extends LoginAdminPageTest {
     private void clickOnMenuByText(String text) {
         driver.findElement(By.xpath(String.format("//*[contains(text(),'%s')]", text))).click();
     }
+
+    @Test
+    public void exercise12Test() {
+        clickOnMenuByText("Catalog");
+        addNewProduct();
+        Assert.assertTrue(checkAddedProductIsPresent());
+    }
+
+    private boolean checkAddedProductIsPresent() {
+        return driver.findElement(By.xpath("//a[contains(text(), 'Elephant')]")).isDisplayed();
+    }
+
+    private void addNewProduct() {
+        driver.findElement(By.xpath("//a[@class='button'][contains(text(), ' Add New Product')]")).click();
+        Product product = new Product();
+        product.setProductName("Elephant");
+        fillGeneralInfoAboutNewProduct(product);
+        fillInformationAboutNewProduct();
+        fillPricesAboutNewProduct();
+        driver.findElement(By.name("save")).click();
+    }
+
+    private void fillGeneralInfoAboutNewProduct(Product product) {
+        driver.findElement(By.xpath("//strong[contains(text(), 'Status')]")).isDisplayed();
+        driver.findElement(By.xpath("//input[@type='radio'][@value='1']")).click();
+        driver.findElement(By.name("name[en]")).sendKeys(product.getProductName());
+        driver.findElement(By.name("code")).sendKeys(getRandomString(2) + getRandomValue(3));
+        enterValueInInputTypeNumber("quantity", "30");
+        selectOptionByValue("sold_out_status_id", "2");
+        File file = FileUpload.getRandomFileFromFolder(FileUpload.getFolder());
+        uploadNewFile(file);
+    }
+
+    private void fillInformationAboutNewProduct() {
+        driver.findElement(By.xpath("//strong[contains(text(), 'Manufacturer')]")).isDisplayed();
+        driver.findElement(By.xpath("//div[@class='tabs']//a[contains(text(), 'Information')]")).click();
+        selectOptionByValue("manufacturer_id", "1");
+        driver.findElement(By.name("short_description[en]")).sendKeys("Leather mini bag in the shape of elephant");
+    }
+
+    private void fillPricesAboutNewProduct() {
+        driver.findElement(By.xpath("//h2[contains(text(), 'Prices')]")).isDisplayed();
+        driver.findElement(By.xpath("//div[@class='tabs']//a[contains(text(), 'Prices')]")).click();
+        enterValueInInputTypeNumber("purchase_price", "350");
+        selectOptionByValue("purchase_price_currency_code", "USD");
+    }
+
+    private void selectOptionByValue(String nameSelect, String value) {
+        WebElement select = driver.findElement(By.name(nameSelect));
+        Select dropdown = new Select(select);
+        dropdown.selectByValue(value);
+    }
+
+    private void enterValueInInputTypeNumber(String nameSelect, String value) {
+        WebElement webElement = driver.findElement(By.name(nameSelect));
+        webElement.sendKeys(Keys.CONTROL + "a");
+        webElement.sendKeys(value);
+    }
+
+    private void uploadNewFile(File file) {
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys(file.getAbsolutePath());
+    }
 }
+

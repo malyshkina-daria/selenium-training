@@ -1,13 +1,13 @@
-package ru.stqa.training.selenium;
+package utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-class Utils {
-    static String getRandomValue(int length) {
+public class Utils {
+    public static String getRandomValue(int length) {
         return RandomStringUtils.randomNumeric(length);
     }
 
-    static String getRandomString(int length) {
+    public static String getRandomString(int length) {
         return RandomStringUtils.randomAlphabetic(length).toLowerCase();
     }
 }
