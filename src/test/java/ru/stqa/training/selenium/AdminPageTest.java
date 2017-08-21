@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import utils.FileUpload;
 
@@ -13,7 +14,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static utils.Utils.getRandomString;
 import static utils.Utils.getRandomValue;
 
@@ -33,6 +36,36 @@ public class AdminPageTest extends LoginAdminPageTest {
                 }
             }
         }
+    }
+
+    @Test
+    public void exercise14Test() {
+        clickOnMenuByText("Countries");
+        WebElement row = driver.findElement(By.xpath("//tr[@class='row'][" + (getRandomValue(1) + 1) + "]"));
+        row.findElement(By.xpath(".//td[7]//i[@class='fa fa-pencil']")).click();
+        wait.until(titleContains("Edit Country | My Store"));
+        List<WebElement> externalLinks = driver.findElements(By.xpath("//form[@method='post']//a[@target='_blank']"));
+        openAndCloseNewWindow(externalLinks);
+    }
+
+    private void openAndCloseNewWindow(List<WebElement> webElementList) {
+        for (WebElement element : webElementList) {
+            String mainWindow = driver.getWindowHandle();
+            Set<String> existingWindows = driver.getWindowHandles();
+            element.click();
+            String newWindow = wait.until(newWindowIsOpen(existingWindows));
+            driver.switchTo().window(newWindow);
+            driver.close();
+            driver.switchTo().window(mainWindow);
+        }
+    }
+
+    private ExpectedCondition<String> newWindowIsOpen(Set<String> existingWindows) {
+        return webDriver -> {
+            Set<String> handles = driver.getWindowHandles();
+            handles.removeAll(existingWindows);
+            return handles.size() > 0 ? handles.iterator().next() : null;
+        };
     }
 
     @Test
