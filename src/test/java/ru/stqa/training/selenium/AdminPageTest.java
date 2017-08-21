@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import utils.FileUpload;
@@ -182,6 +184,24 @@ public class AdminPageTest extends LoginAdminPageTest {
 
     private void uploadNewFile(File file) {
         driver.findElement(By.xpath("//input[@type='file']")).sendKeys(file.getAbsolutePath());
+    }
+
+    @Test
+    public void exercise17Test() {
+        clickOnMenuByText("Catalog");
+        driver.findElement(By.xpath("//a[contains(text(), 'Rubber Ducks')]")).click();
+        List<WebElement> ducksList = driver.findElements(By.xpath("//tr[@class='row']/td[3]/a[contains(text(), 'Duck')]"));
+        for (int i = 0; i < ducksList.size(); i++) {
+            driver.findElement(By.xpath("//tr[@class='row'][" + (i + 4) + "]/td[3]/a[contains(text(), 'Duck')]")).click();
+            driver.findElement(By.name("cancel")).click();
+//            driver.manage().logs().get(LogType.BROWSER).forEach(System.out::println);
+        }
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+        if (logEntries.getAll().size() == 0) {
+            System.out.println("Log Browser Messages are missing");
+        } else {
+            logEntries.forEach(System.out::println);
+        }
     }
 }
 
